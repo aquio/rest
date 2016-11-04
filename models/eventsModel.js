@@ -19,7 +19,7 @@ function events() {
     };
 
     // CREATE NEW EVENT
-    this.create = function(req, res) {
+    this.create = function (req, res) {
         var sql = 'CALL EVENTS_CREATE(?, ?, ?, ?, ?)';
         db.query(sql, [req.title, req.court_id, req.instructor_id, req.start_datetime, req.end_datetime], function (err, result) {
             if (err) {
@@ -33,20 +33,26 @@ function events() {
     };
 
     // UPDATE EVENTS
-    this.update = function(req, res) {
-        var sql = 'CALL EVENTS_UPDATE(?, ?, ?, ?, ?, ?, ?)';
-        db.query(sql, [req.id, req.title, req.court_id, req.instructor_id, req.start_datetime, req.end_datetime, req.selected_court_id], function (err, result) {
+    this.update = function (req, res) {
+        var sql = 'CALL EVENTS_UPDATE(?, ?, ?, ?, ?, ?, @out)';
+        db.query(sql, [req.id, req.title, req.instructor_id, req.start_datetime, req.end_datetime, req.court_id], function (err, result) {
             if (err) {
                 console.log(err);
             }
             else {
-                res.send("DONE");
+                if(result.length==2){
+                    res.send("ERROR");
+                }
+                else
+                {
+                    res.send("DONE");
+                }
             }
         });
     };
 
     // DELETE EVENTS
-    this.delete = function(id, res) {
+    this.delete = function (id, res) {
         var sql = 'CALL EVENTS_DELETE(?)';
         db.query(sql, [id], function (err, result) {
             if (err) {

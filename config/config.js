@@ -2,10 +2,11 @@ module.exports = {
 
     //mysql database credentials
     database: {
-        host: 'localhost',
+        host: '95.59.26.76',
         user: 'root',
-        password: 'xxx',
-        database: 'tsadb'
+        password: '434',
+        database: 'tsadb',
+        multipleStatements: true
     },
 
     // jwt secret key
